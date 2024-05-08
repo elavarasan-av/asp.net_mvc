@@ -1,0 +1,79 @@
+﻿@model bell_Electronics.Models.Products
+@{
+    ViewBag.Title = "ProductsCart";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+
+
+@using (Html.BeginForm("ProductsCart",
+                        "Customer",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <br />
+    <div class="container mt-2">
+        <h2 class="text-center">Products Add to Cart</h2>
+        <hr />
+        <div class="row justify-content-around">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="product-main-img">
+                        <div class="product-preview">
+                            <img src="@Url.Content(Model.PrdimageUrl)" id="img_prod" class="img-thumbnail rounded-3" style="width:500px;height:400px; border-color:blue" />
+                       @Html.HiddenFor(model=>model.PrdimageUrl)
+                        </div>
+                    </div>
+                </div>
+
+                @Html.HiddenFor(model => model.ProductsID)
+               
+                <div class="col-md-6">
+                    <div class="product-details">
+                        <h2 class="product-name">@Html.DisplayFor(model => model.ProductName, new { @class = "form-control" })</h2>
+
+                        <div>
+                            <h3 class="product-price">₹ @Html.DisplayFor(model => model.Price, new { @class = "form-control" }) </h3>
+                            @Html.HiddenFor(model=>model.Price)
+                            <span class="product-available">  @(Model.Prod_Status == 1 ? "In Stock" : "Out of Stock")</span>
+
+                        </div>
+                        <br />
+
+                        <div class="add-to-cart">
+                            <div class="qty-label">
+                                Qty
+                                <div class="input-number">
+                                    <input type="number" value="1" name="txtQty" />
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                            </div>
+                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+
+                        </div>
+
+
+                        <ul class="product-links">
+                            <li>Share:</li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row mt-5">
+                @Html.ActionLink("Back to List", "ProductsList", new { id = Model.CategoryId }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

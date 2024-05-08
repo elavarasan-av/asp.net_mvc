@@ -1,0 +1,93 @@
+﻿@model bell_Electronics.Models.UsersModel
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("UserEdit",
+                           "UserPanel", FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="container mt-3">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 ">
+                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center">  @Session["id"]  Editer</h2>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="product-details">
+                            <img src="https://cdn.pixabay.com/animation/2023/06/30/07/30/07-30-05-456_512.gif" style="width:100%" />
+                        </div>
+                    </div>
+                    <div class="col-md-7 text-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.id)
+
+                        <div class="row mt-3">
+                            <div class="col-sm-3 col-md-4 col-5">
+                                <h3 style="font-weight: bold;">Name</h3>
+                            </div>
+                            <div class="col-md-5 col-6">
+                                @Html.TextBoxFor(Model => Model.Name, new { @class = "form-control input-lg" })
+
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;" />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-4 col-5">
+                                <h3 style="font-weight: bold;">Mobile</h3>
+                            </div>
+                            <div class="col-md-5 col-6">
+                                @Html.TextBoxFor(Model => Model.MobileNo, new { @class = "form-control input-lg" })
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;" />
+
+                        <div class="row">
+                            <div class="col-sm-3 col-md-4 col-5">
+                                <h3 style="font-weight: bold;">Email</h3>
+                            </div>
+                            <div class="col-md-5 col-6">
+                                @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control input-lg" })
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;" />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-4 col-5">
+                                <h3 style="font-weight: bold;">Password</h3>
+                            </div>
+                            <div class="col-md-5 col-6">
+                                @Html.TextBoxFor(Model => Model.Password, new { @class = "form-control input-lg" })
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;" />
+                    </div>
+
+                </div>
+            </div>
+            <dvi class="card-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <a href="~//UserPanel/UserDetails" class="btn btn-primary"> Back</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <input class="btn btn-warning" type="submit" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </dvi>
+        </div>
+    </div>
+}
+<div class="form-group">
+    <p style="color:red">@ViewBag.error</p>
+</div>

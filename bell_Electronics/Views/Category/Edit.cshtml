@@ -1,0 +1,101 @@
+﻿@model bell_Electronics.Models.tbl_Category
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#imgfile").change(function () {
+            var File = this.files;
+            if (File && File[0]) {
+                ReadImage(File[0]);
+            }
+        })
+    })
+    var ReadImage = function (file) {
+        var reader = new FileReader;
+        var image = new Image;
+        reader.readAsDataURL(file);
+        reader.onload = function (_file) {
+            image.src = _file.target.result;
+            image.onload = function () {
+                $("#img_Category").attr('src', _file.target.result);
+
+            }
+        }
+    }
+</script>
+
+@using (Html.BeginForm("Edit",
+                        "Category",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <h4>Edit Category</h4>
+        <hr />
+        <div class="row justify-content-around">
+            <div class="col">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.CategoryId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 mb-2">
+                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    @Html.LabelFor(model => model.imageURL, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 mb-2">
+
+                        <input src="@Url.Content(Model.imageURL)" type="file" name="categoryimg" id="imgfile" class="form-control" />
+
+                        @Html.HiddenFor(model => model.imageURL)
+                        @Html.ValidationMessageFor(model => model.imageURL, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    @Html.LabelFor(model => model.Cate_Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                            @Html.EditorFor(model => model.Cate_Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cate_Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input  type="submit" value="Save" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group mt-3">
+
+                    <h3>Category Image</h3>
+                    <img src="@Url.Content(Model.imageURL)" id="img_Category"   class="img-thumbnail rounded-2" style="width:450px;height:400px; border:2px solid blue" />
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <p style="color:red">@ViewBag.error</p>
+        </div>
+    </div>
+}
+
+<div class="btn btn-outline-info">
+    @Html.ActionLink("Back to List", "Index", new {@class="btn btn-info"})
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,78 @@
+﻿@model bell_Electronics.Models.tbl_Cart
+@{
+    ViewBag.Title = "CartUpdate";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+@using (Html.BeginForm("CartUpdate",
+                        "Customer",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data", }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <div class="container">
+        <div class="card shadow mt-4">
+            <div class="card-header py-3">
+                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center"> Your Cart Update</h2>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-bordered" id="dataTable" width="300%" cellspacing="0">
+                    <tr>
+                        <th class="text-center">
+                            <h4>Product Name</h4>
+                        </th>
+                        <th class="text-center">
+                            <h4>Product pic</h4>
+                        </th>
+                        <th class="text-center">
+                            <h4>Price</h4>
+                        </th>
+                        <th class="text-center">
+                            <h4>Quantity</h4>
+                        </th>
+
+                    </tr>
+
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => model.ProductName)
+                            @Html.HiddenFor(model => model.ProductsID)
+                        </td>
+                        <td class="text-center">
+                            <img src="@Url.Content(Model.Cartimg)" style="width:300px ;border-radius:10px 10px 10px 10px" />
+                        </td>
+                        <td class="text-center">
+                            <span class="badge rounded-pill bg-primary">₹   @Html.DisplayFor(model => model.Price)  </span>
+                          
+                        </td>
+                        <td class="qty-label" width="10%">
+                            <div class="input-number">
+                                <input type="number" value=" @Html.DisplayFor(model => model.Quantity)" name="txtQty" id="txtqt" />
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                            @Html.HiddenFor(model => model.Quantity)
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="card-footer">
+                <div>
+                    <div class="continue__btn">
+                        <a href="~//Customer/ProdCartList?id=@Model.ProductsID" class="btn btn-info" > <i class="fa fa-arrow-circle-left mr-2"></i> Continue Shopping</a>
+
+                            <button type="submit" class="btn btn-warning float-end" > <i class="fa fa-refresh mr-2"></i> Update</button>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+

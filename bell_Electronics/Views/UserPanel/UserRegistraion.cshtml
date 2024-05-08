@@ -1,0 +1,101 @@
+﻿@model bell_Electronics.Models.UsersModel
+@{
+    ViewBag.Title = "UserRegistraion";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+@using (Html.BeginForm("UserRegistraion",
+                        "UserPanel",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="section">
+        <div class="container">
+            <div class="card shadow rounded-3">
+                <div class="card-header py-3 ">
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center">New User Registration</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                    
+                        <div class="col-md-6 ms-lg-5 mt-5">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div>
+                              
+                                <h4 class="">Name</h4>
+
+
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control border border-info" })
+
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="mt-3">
+                              
+                                <h4 class="">Moblie</h4>
+
+                                @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control border border-info", })
+
+                                @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="mt-3">
+                                <h4 class="">Email</h4>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control border border-info", })
+
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="mt-3">
+                                <h4 class="">Username</h4>
+
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control border border-info" })
+
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="mt-3 mb-4">
+                                <h4 class="">Password</h4>
+
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control border border-info" })
+
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <img src="~/Images/registrationpic.jpg" class="img-thumbnail rounded-5" style="width:70%" />
+                            </div>
+                        </div>
+
+
+                        <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="~/UserPanel/Login" class="btn btn-info">Already Register</a>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                    <input type="submit" value="Submit       " class="btn btn-success mt-1" />
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br />
+       
+    </div>
+
+
+
+}

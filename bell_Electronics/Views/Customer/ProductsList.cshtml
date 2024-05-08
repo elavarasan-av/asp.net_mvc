@@ -1,0 +1,40 @@
+﻿@model IEnumerable<bell_Electronics.Models.Products>
+@{
+    ViewBag.Title = "ProductsList";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+         
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelitem => item.ProductsID)
+                    <div class="col-sm-4">
+                        <div class="product mb-6 mt-lg-5" style="">
+
+                            <div class="card">
+                                <div class="card-body align-content-center">
+                                    <div class="shop-img">
+                                        <img src="@Url.Content(item.PrdimageUrl)" class="card-img-top" style="width:400px;height:350px;" alt="...">
+                                    </div>
+                                    <h3 class="product-name text-center"><a href="~//Customer/ProductDetails?id=@item.ProductsID" id="23"> @Html.DisplayFor(modelitem => item.ProductName)</a></h3>
+
+                                    <h4 class="product-price text-center"> ₹ @Html.DisplayFor(modelitem => item.Price) </h4>
+                                </div>
+                            </div>
+
+                            <div class="add-to-cart">
+                                <a href="~//Customer/ProductsCart?id=@item.ProductsID" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add Cart</a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <div id="slick-nav-1" class="products-slick-nav"></div>
+        </div>
+    </div>
+</div>

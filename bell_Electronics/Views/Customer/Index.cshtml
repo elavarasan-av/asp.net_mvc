@@ -1,0 +1,34 @@
+﻿@model IEnumerable<bell_Electronics.Models.tbl_Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 col-xs-6">
+                    <div class="shop">
+                        @Html.HiddenFor(modelitem=>item.CategoryId)
+                        <div class="shop-img">
+                            <img src="@Url.Content(item.imageURL)" style="width:400px;height:350px" alt="">
+                        </div>
+                        <div class="shop-body">
+                            <h3> @Html.DisplayFor(modelitem => item.CategoryName)<br>Collection</h3>
+                            @Html.ActionLink(" Shop now", "ProductsList", new { id = item.CategoryId }, new { @class = "cta-btn fa fa-arrow-circle-right" })  
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

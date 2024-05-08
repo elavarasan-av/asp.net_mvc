@@ -1,0 +1,82 @@
+﻿@model IEnumerable<bell_Electronics.Models.Products>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["success"] != null)
+{
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+     toastr.success('@TempData["success"]');
+    </script>
+}
+
+    <div class="container">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center">Products Lists</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <tr>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.ProductName)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.CategoryName)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.PrdimageUrl)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Prod_Status)
+                        </th>
+                        <th> Action </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td class="text-center" width="25%">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.CategoryName)
+                            </td>
+                            <td class="text-center">
+                                ₹ @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td class="text-center">
+                                <img src="@Url.Content(item.PrdimageUrl)" style=" height:100px;width:100px ;border-radius:10px 10px 10px 10px" />
+                            </td>
+                            <td class="text-center">
+                                <span class="@(item.Prod_Status==1? "badge rounded-pill bg-success":"badge rounded-pill bg-danger")"> @(item.Prod_Status == 1 ? "Active" : "Deactive") </span>
+
+                                @Html.HiddenFor(modelItem => item.Prod_Status)
+
+                            </td>
+                            <td class="text-center" width="20%">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductsID }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Details", "Details", new { id = item.ProductsID }, new { @class = "btn btn-info btn-sm" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ProductsID }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+

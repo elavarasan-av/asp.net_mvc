@@ -1,0 +1,38 @@
+﻿@model IEnumerable<bell_Electronics.Models.Products>
+@{
+    ViewBag.Title = "AllProductsView";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+<link href="~/Theme/css/AllProductsStyle.css" rel="stylesheet" />
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                @Html.HiddenFor(modelitem => item.ProductsID)
+                <div class="col-md-3" style="margin-top: 50px;">
+                    <div class="card-sl">
+                        <div class="card-image">
+                            <img src="@Url.Content(item.PrdimageUrl)" />
+                        </div>
+                        @*<a class="card-action" href="#"><i class="fa fa-heart"></i></a>*@
+                        <div class="card-heading">
+                            @(item.ProductName)
+                        </div>
+                        <div class="card-text">
+                         @(item.CategoryName)
+                        </div>
+                        <div class="card-text">
+                            ₹ @(item.Price)
+                        </div>
+                        <a href="~//Customer/ProductsCart?id=@item.ProductsID" class="card-button"> Purchase</a>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+

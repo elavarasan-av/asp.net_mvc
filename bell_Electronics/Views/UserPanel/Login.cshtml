@@ -1,0 +1,82 @@
+﻿@model bell_Electronics.Models.UsersModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+@if (TempData["success"] != null)
+{
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+     toastr.success('@TempData["success"]');
+    </script>
+}
+
+
+@using (Html.BeginForm("Login",
+                        "UserPanel",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="section">
+        <div class="container">
+            <div class="card shadow mt-2">
+                <div class="card-header py-3 ">
+                    <h2 class="m-0 font-weight-bold text-success" style="text-align:center">Login</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6 ms-lg-5 mt-5">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="text align-content-center">
+                                <div class="mb-3">
+                                    <h4> User Id</h4>
+                                    @Html.TextBoxFor(model => model.UserName, new  { @class = "form-control",placeholder="User Name" } )
+                                    @Html.ValidationMessageFor(model => model.UserName, "*", new { @class = "text-danger" })
+
+                                </div>
+
+                                <div class="mb-3">
+                                    <h4>Password</h4>
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control",type="password",placeholder="Password" } )
+                                    @Html.ValidationMessageFor(model => model.Password, "*", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Login" class="btn btn-success me-3" />
+                                    <a href="~//UserPanel/UserRegistraion" class="btn btn-info">Are you New User ?</a> 
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col mt-5">
+                            <div class="form-group">
+                                <img src="https://rurutek.com/jio/assets/img/login-animate.gif" class="img-thumbnail rounded-3" style="width:400px;height:300px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ms-lg-5">
+                    @*@Html.Raw(ViewBag.Showmsg);*@
+                    <div class="form-group">
+                        <p style="color:red">@ViewBag.Showmsg</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    <a href="~//Customer/Index" class="btn btn-primary">Back to Home</a>
+</div>

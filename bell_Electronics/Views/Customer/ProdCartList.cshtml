@@ -1,0 +1,107 @@
+﻿@model IEnumerable<bell_Electronics.Models.tbl_Cart>
+@{
+    ViewBag.Title = "ProdCartList";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+@using (Html.BeginForm("Payment",
+                        "Customer",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data", }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="container">
+        <div class="card shadow mt-4">
+            @if (Convert.ToInt32(Session["crtqty"]) != 0)
+            {
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center">Cart Lists</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <tr>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Cartimg)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.total)
+                            </th>
+                            <th> Action </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <h5>
+                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                    </h5>
+                                    <input type="hidden" value="@item.ProductsID" name="id" />
+                                </td>
+                                <td class="text-center">
+                                    <img src="@Url.Content(item.Cartimg)" style=" height:100px;width:150px ;border-radius:10px 10px 10px 10px" />
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-primary">₹ @(item.Price ) </span>
+                                </td>
+                                <td class="text-center" width="10%">
+                                    <h4>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </h4>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-primary">₹ @(item.total ) </span>
+
+                                </td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("CartUpdate", "Customer", new {id=@item.ProductsID})" class="btn btn-primary"> <i class="fa fa-pencil"></i></a>
+                                    <a href="@Url.Action("CartDelete", "Customer", new {id=@item.ProductsID})" class="btn btn-danger"> <i class="fa fa-trash"></i> </a>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="3"></td>
+                            <td class="pl-lg-5 text-center">
+                                <b>Grand Total:-</b>
+                            </td>
+                            <td class="text-center"> <h5>₹ @Session["Total"]</h5></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <a href="~//Customer/AllProductsView" class="btn btn-info"> <i class="fa fa-arrow-circle-left mr-2"></i> Continue Shopping</a>
+                        <a href="~//Customer/Payment" class="btn btn-success">Checkout <i class="fa fa-arrow-circle-right mr-2"></i> </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <h3 class="text-center"> No Products in You are Cart Please purchese the Products</h3>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <a href="~//Customer/AllProductsView" class="btn btn-info"> <i class="fa fa-arrow-circle-left mr-2"></i> Continue Shopping</a>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+
+
+
+    </div>
+}
+

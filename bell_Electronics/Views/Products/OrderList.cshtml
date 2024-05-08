@@ -1,0 +1,87 @@
+﻿@model IEnumerable<bell_Electronics.Models.Order>
+@{
+    ViewBag.Title = "OrderList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["statusupdate"] != null)
+{
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+     toastr.success('@TempData["statusupdate"]');
+    </script>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold text-primary" style="text-align:center">Order Lists</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <tr>
+              
+                <th class="text-center">
+                    <h6>OrderNO</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Products</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Images</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Quantity</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Users</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Status</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Date</h6>
+                </th>
+                <th class="text-center">
+                    <h6>Action</h6>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    @Html.HiddenFor(modelItem => item.UserName)
+                 
+                    <td class="text-center" width="10%">
+                        @Html.DisplayFor(modelItem => item.OrderNo)
+                    </td>
+                    <td class="text-center" width="20%">
+                        @Html.DisplayFor(modelItem => item.ProductsName)
+                    </td>
+                    <td class="text-center" width="20%">
+                        <img src="@Url.Content(item.PrdimageUrl)" style=" height:100px;width:100px ;border-radius:10px 10px 10px 10px" />
+                    </td>
+                    <td class="text-center" width="10%">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td class="text-center" width="10%">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td class="text-center" width="10%">
+                        <span class="@(item.Status=="Pending" ? "badge rounded-pill bg-danger":"badge rounded-pill bg-success")"> @(item.Status) </span>
+
+                        @Html.HiddenFor(modelItem => item.Status)
+                    </td>
+                    <td class="text-center" width="10%">
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td class="text-center" width="10%">
+                        <a href="~//Products/OrderUpdate?orno=@item.OrderNo" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

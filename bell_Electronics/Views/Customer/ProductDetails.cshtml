@@ -1,0 +1,58 @@
+﻿@model bell_Electronics.Models.Products
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div id="product-main-img">
+                    <div class="product-preview">
+                        <img src="@Url.Content(Model.PrdimageUrl)" id="img_prod" class="img-thumbnail rounded-3" style="width:300px; border-color:blue" />
+                    </div>
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.ProductsID)
+            <div class="col-md-6">
+                <div class="product-details">
+                    <h2 class="product-name">@Html.DisplayFor(model => model.ProductName, new { @class = "form-control" })</h2>
+
+                    <div>
+                        <h3 class="product-price">₹ @Html.DisplayFor(model => model.Price, new { @class = "form-control" }) </h3>
+                        <span class="product-available">  @(Model.Prod_Status == 1 ? "In Stock" : "Out of Stock")</span>
+
+                    </div>
+
+                        <h4> Description :</h4>
+                        <div class="box">
+                            @Html.DisplayFor(x => x.Description, new { @class = "form-control border border-info" })
+                        </div>
+                   
+                    <br />
+  
+                    <div class="add-to-cart">
+                        <a href="~//Customer/ProductsCart?id=@Model.ProductsID" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add Cart</a>
+                    </div>
+
+                    <ul class="product-links">
+                        <li>Share:</li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @Html.ActionLink("Back to List", "ProductsList",new { id = Model.CategoryId}, new { @class = "btn btn-primary" })
+
+
+

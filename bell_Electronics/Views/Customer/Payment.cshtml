@@ -1,0 +1,151 @@
+﻿@model bell_Electronics.Models.Payment
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+
+@using (Html.BeginForm("Payment",
+                        "Customer",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-11">
+                @*<div class="card card0 rounded-0">*@
+                <div class="card mt-2">
+                    <div class="row">
+                        @*<div class="col-md-5 d-md-block d-none p-0 box">*@
+                        <div class="col-md-4  box">
+                            <div class="card rounded-0 border-0 card1" id="bill">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <h3 id="heading1">Payment Summary</h3>
+                                <div class="card-body">
+                                    <div class="col-md-12 red-bg">
+                                        <p class="bill-head" id="total-label">Total Price</p>
+                                        <h2 class="bill-head" id="total">₹ @Session["Total"]</h2>
+                                        <small class="bill-date" id="total-label">Price includes all taxes</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <div class="col-md-8 col-sm-12 p-0 box">
+                            <div class="card rounded-0 border-0 card2" id="paypage">
+
+                                <div class="form-card">
+                                    <h2 id="heading2" class="text-success text-center">Payment Method</h2>
+
+                                    <div class="card-header mt-2">
+                                        <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                                            <li class="nav-link" data-value="card"> <a data-toggle="pill" href="#card" class="nav-link"> <img src="https://i.imgur.com/28akQFX.jpg" style="width:200px;height:60px;"> </a> </li>
+                                            <li class="nav-link" data-value="cod"> <a data-toggle="pill" href="#cod" class="nav-link"><img src="https://static-00.iconduck.com/assets.00/cash-on-delivery-icon-1024x345-7sgjf338.png" style="width:200px;height:60px;"> </a></li>
+                                        </ul>
+                                    </div>
+                                  
+                                    <div class="card-body">
+                                        <div class="tab-content">
+
+                                            <div id="card" class="tab-pane fade show active pt-3">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="pay">Name on Card</label>
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                        @Html.TextBoxFor(model => model.name, new { @class = "form-control form-control-lg border border-info", name = "holdername", style = "border-radius:5px", placeholder = "Card Holder Name" })
+
+                                                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="pay">Card Number</label>
+                                                        @Html.TextBoxFor(model => model.CardNo, new { @class = "form-control border border-info", id = "cr_no", name = "cardno", style = "border-radius: 5px", placeholder = "0000-0000-0000-0000", @minLength = 19, @maxLength = 19 })
+
+                                                        @Html.ValidationMessageFor(model => model.CardNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-8 col-md-6">
+                                                            <label class="pay">CVV</label>
+                                                            @Html.PasswordFor(model => model.CVVno, new { @class = "form-control border border-info placeicon", name = "cvcpwd", style = "border-radius: 5px", @minLength = 3, @maxLength = 3 })
+
+                                                            @Html.ValidationMessageFor(model => model.CVVno, "", new { @class = "text-danger" })
+                                                        </div>
+
+                                                        <div class="col-4 col-md-6">
+                                                            <label class="pay">Expiration Date</label>
+                                                            @Html.TextBoxFor(model => model.ExpDate, new { @class = "form-control border border-info", id = "exp", name = "exp", style = "border-radius: 5px", placeholder = "MM/YY", @minLength = 5, @maxLength = 5 })
+
+                                                            @Html.ValidationMessageFor(model => model.ExpDate, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-8">
+                                                            <label class="pay">Address</label>
+                                                            @Html.TextAreaFor(model => model.CardAddress, new
+                                                            {
+                                                                @class = "form-control border border-info",
+                                                           style = "border-radius:5px;",
+                                                                name = "card_address",
+                                                                id = "cr_no",
+                                                                placeholder = "Enter the Address",
+                                                            })
+
+                                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <button type="submit" class="btn btn-info placeicon" name="modpay" value="card">MAKE A PAYMENT </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            @*   cod *@
+                                            <div id="cod" class="tab-pane fade show  pt-3">
+                                                <div class="row">
+                                                    <div class="col-8 col-md-6">
+
+                                                        <label class="pay">Name</label>
+                                                        @Html.TextBoxFor(model => model.Name1, new { @class = "form-control border border-info", style = "border-radius: 5px", id = "cr_no", name = "cod_name", placeholder = "Enter the Name" })
+
+                                                        @Html.ValidationMessageFor(model => model.Name1, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8 col-md-6">
+                                                        <label class="pay">Address</label>
+                                                        @Html.TextAreaFor(model => model.Address, new
+                                                        {
+                                                            @class = "form-control border border-info",
+                                                       style = "border-radius:5px;",
+                                                            name = "cod_address",
+                                                            id = "cr_no",
+                                                            placeholder = "Enter the Address",
+                                                        })
+
+                                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-info placeicon"  name="modpay" value="cod">MAKE A PAYMENT </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
